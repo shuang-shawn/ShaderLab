@@ -30,9 +30,9 @@ Material:
     m_Ints: []
     m_Floats:
     - _AmbientIntensity: 1
-    - _UseFlashlight: 1
+    - _UseFlashlight: 0
     - _UseFog: 0
     m_Colors:
     - _PlayerForward: {r: -0.9963395, g: 0, b: -0.08548486, a: 0}
-    - _PlayerPosition: {r: -0.017462488, g: 0.000000010236443, b: 5.973385, a: 0}
+    - _PlayerPosition: {r: 0.05546175, g: -0.08574355, b: 5.535483, a: 0}
   m_BuildTextureStacks: []

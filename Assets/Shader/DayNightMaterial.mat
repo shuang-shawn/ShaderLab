@@ -86,7 +86,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _UseFlashlight: 1
+    - _UseFlashlight: 0
     - _UseFog: 0
     - _ZWrite: 1
     m_Colors:

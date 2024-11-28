@@ -12,8 +12,12 @@ public class PlayerController : MonoBehaviour
     public Transform cameraTransform;
     public MazeGenerator mazeGenerator;
     public TMP_Text wallStatus;
+    
 
     public Camera freeLookCamera; // Reference to the FreeLook camera
+    public GameObject ballPrefab;
+    public float throwForce = 10f;
+
     
 
     private CharacterController characterController;
@@ -36,6 +40,9 @@ public class PlayerController : MonoBehaviour
         playerInputActions.Player.Look.canceled += ctx => lookInput = Vector2.zero;
         playerInputActions.Player.PassThrough.performed += OnPassThrough;
         playerInputActions.Player.ResetGame.performed += OnResetGame;
+        playerInputActions.Player.Throw.performed += ThrowBall;
+
+
     }
 
     private void OnEnable()
@@ -118,5 +125,14 @@ public class PlayerController : MonoBehaviour
 
         // Smoothly rotate the character toward the target rotation
 
+    }
+    private void ThrowBall(InputAction.CallbackContext context)
+    {
+        // Instantiate the ball
+        GameObject ball = Instantiate(ballPrefab, transform.position + new Vector3(0,0.6f,0), transform.rotation);
+
+        // Get Rigidbody and apply force in the forward direction
+        Rigidbody rb = ball.GetComponent<Rigidbody>();
+        rb.velocity = transform.forward * throwForce;
     }
 }
