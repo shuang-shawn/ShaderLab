@@ -20,6 +20,9 @@ public class AudioController : MonoBehaviour
     private AudioSource currentSong;
     public bool isBackgroundPlaying = false;
     private int currentPlayingIndex = 0;
+    public float defaultVolume = 0.2f;
+    public float maxVolum = 0.6f;
+    public float currentVolume = 0.2f;
     public void Awake()
     {
         if (aCtrl == null)
@@ -31,6 +34,7 @@ public class AudioController : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject); // Optional: persists across scenes
+        
     }
     public void PlayBumpIntoWall() {
         bump.Play();
@@ -58,8 +62,16 @@ public class AudioController : MonoBehaviour
             } else {
                 currentPlayingIndex = 1;
             }
+            if (GlobalAmbientControl.ambientControl.isFogOn) {
+                currentVolume = defaultVolume / 2;
+            } else {
+                currentVolume = defaultVolume;
+
+            }
             if (isBackgroundPlaying) {
                 musicList[currentPlayingIndex].Play();
+                musicList[currentPlayingIndex].volume = currentVolume;
+                
             } else {
                 musicList[currentPlayingIndex].Stop();
             }
@@ -70,7 +82,17 @@ public class AudioController : MonoBehaviour
         musicList[currentPlayingIndex].Stop();
         currentPlayingIndex = (currentPlayingIndex + 1) % 2;
         musicList[currentPlayingIndex].Play();
+        musicList[currentPlayingIndex].volume = currentVolume;
+    }
 
+    public void ToggleFogVolume() {
+        if (GlobalAmbientControl.ambientControl.isFogOn) {
+            currentVolume = defaultVolume / 2;
+            
+        } else {
+            currentVolume = defaultVolume;
+        }
+        musicList[currentPlayingIndex].volume = currentVolume;
     }
 
 

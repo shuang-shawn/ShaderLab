@@ -58,6 +58,9 @@ public class GlobalAmbientControl : MonoBehaviour
 
             // Update fog setting for all materials
             SetFogEffect(isFogOn);
+            if(AudioController.aCtrl.isBackgroundPlaying) {
+                AudioController.aCtrl.ToggleFogVolume();
+            }
         }
 
         if (Input.GetKeyDown(flashlightToggleKey))
