@@ -3,7 +3,12 @@ using UnityEngine;
 public class GlobalAmbientControl : MonoBehaviour
 {
     public Material[] objectMaterials;  // List of materials to update
-    private bool isDay = true;          // Start with day mode
+    public UnityEngine.KeyCode fogToggleKey = KeyCode.F;
+    public UnityEngine.KeyCode dayNightToggleKey = KeyCode.T;
+
+
+    private bool isDay = true;
+    private bool isFogOn = false;          // Start with day mode
 
     void Start()
     {
@@ -17,13 +22,31 @@ public class GlobalAmbientControl : MonoBehaviour
     void Update()
     {
         // Toggle day/night mode with the "T" key
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(dayNightToggleKey))
         {
             isDay = !isDay;
             float intensity = isDay ? 1.0f : 0.2f;  // Day: Bright, Night: Dim
 
             // Update ambient intensity for all materials at once
             SetAmbientIntensity(intensity);
+        }
+
+        if (Input.GetKeyDown(fogToggleKey))
+        {
+            isFogOn = !isFogOn;
+
+            // Update fog setting for all materials
+            SetFogEffect(isFogOn);
+        }
+
+    }
+
+    void SetFogEffect(bool enableFog)
+    {
+        float fogValue = enableFog ? 1.0f : 0.0f;
+        foreach (var mat in objectMaterials)
+        {
+            mat.SetFloat("_UseFog", fogValue);
         }
     }
 
