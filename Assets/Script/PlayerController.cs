@@ -25,9 +25,11 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private Vector2 lookInput;
     private float verticalRotation = 0f;
-    private AudioController aCtrl;
     public float stepInterval = 0.5f; // Time between each step sound
     private float stepTimer;
+    public float bumpInterval = 0.5f; // Time between each step sound
+
+    private float bumpTimer;
 
     private void Awake()
     {
@@ -44,10 +46,9 @@ public class PlayerController : MonoBehaviour
         playerInputActions.Player.PassThrough.performed += OnPassThrough;
         playerInputActions.Player.ResetGame.performed += OnResetGame;
         playerInputActions.Player.Throw.performed += ThrowBall;
-        if (AudioController.aCtrl != null) {
-            aCtrl = AudioController.aCtrl;
-        }
+       
         stepTimer = 0f;
+        bumpTimer = 0f;
 
 
     }
@@ -160,5 +161,23 @@ public class PlayerController : MonoBehaviour
         // Get Rigidbody and apply force in the forward direction
         Rigidbody rb = ball.GetComponent<Rigidbody>();
         rb.velocity = transform.forward * throwForce;
+    }
+    /// <summary>
+    /// OnCollisionEnter is called when this collider/rigidbody has begun
+    /// touching another rigidbody/collider.
+    /// </summary>
+    /// <param name="other">The Collision data associated with this collision.</param>
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("wall")) {
+            bumpTimer -= Time.deltaTime;
+
+            if (bumpTimer <= 0f)
+            {
+                // Debug.Log("Play walking sound");
+                AudioController.aCtrl.PlayBumpIntoWall();
+                bumpTimer = bumpInterval; // Reset the timer
+            }
+        }
     }
 }

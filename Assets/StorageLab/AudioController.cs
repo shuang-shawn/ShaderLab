@@ -10,6 +10,7 @@ public class AudioController : MonoBehaviour
 
     public AudioSource enemyRespawn;
     public AudioSource walk;
+    public AudioSource bump;
 
     
 
@@ -28,6 +29,9 @@ public class AudioController : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject); // Optional: persists across scenes
+    }
+    public void PlayBumpIntoWall() {
+        bump.Play();
     }
     public void PlayWalk() {
         walk.Play();
