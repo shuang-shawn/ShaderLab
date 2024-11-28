@@ -9,6 +9,9 @@ public class AudioController : MonoBehaviour
     public AudioSource enemyDie;
 
     public AudioSource enemyRespawn;
+    public AudioSource walk;
+
+    
 
     private AudioSource levelMusic;
     public List<AudioSource> musicList;
@@ -25,6 +28,9 @@ public class AudioController : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject); // Optional: persists across scenes
+    }
+    public void PlayWalk() {
+        walk.Play();
     }
     public void PlaySFX()
     {

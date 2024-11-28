@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private Vector2 lookInput;
     private float verticalRotation = 0f;
+    private AudioController aCtrl;
+    public float stepInterval = 0.5f; // Time between each step sound
+    private float stepTimer;
 
     private void Awake()
     {
@@ -41,6 +44,10 @@ public class PlayerController : MonoBehaviour
         playerInputActions.Player.PassThrough.performed += OnPassThrough;
         playerInputActions.Player.ResetGame.performed += OnResetGame;
         playerInputActions.Player.Throw.performed += ThrowBall;
+        if (AudioController.aCtrl != null) {
+            aCtrl = AudioController.aCtrl;
+        }
+        stepTimer = 0f;
 
 
     }
@@ -70,6 +77,25 @@ public class PlayerController : MonoBehaviour
             HandleMovement();
             // HandleLook();
             RotateCharacterToCamera();
+            HandleWalkingSound();
+    }
+    private void HandleWalkingSound() {
+        if (characterController != null && characterController.velocity.magnitude > 0.1f)
+        {
+            stepTimer -= Time.deltaTime;
+
+            if (stepTimer <= 0f)
+            {
+                // Debug.Log("Play walking sound");
+                AudioController.aCtrl.PlayWalk();
+                stepTimer = stepInterval; // Reset the timer
+            }
+        }
+        else
+        {
+            // Reset timer if the player stops moving
+            stepTimer = 0f;
+        }
     }
 
     private void OnPassThrough(InputAction.CallbackContext context)
