@@ -21,8 +21,14 @@ public class AudioController : MonoBehaviour
     public bool isBackgroundPlaying = false;
     private int currentPlayingIndex = 0;
     public float defaultVolume = 0.2f;
-    public float maxVolum = 0.6f;
+    public float fogVolumeFactor = 1f;
+    public float maxVolume = 0.7f;
     public float currentVolume = 0.2f;
+    public float minVolume = 0.1f;
+    public float maxDistance = 5f;
+    public Transform player;
+    public Transform currentEnemy;
+
     public void Awake()
     {
         if (aCtrl == null)
@@ -35,6 +41,20 @@ public class AudioController : MonoBehaviour
 
         DontDestroyOnLoad(gameObject); // Optional: persists across scenes
         
+    }
+    private void FixedUpdate() {
+        currentEnemy = MazeGenerator.mazeGenerator.currentMonster.transform;
+        if (player != null && currentEnemy != null && musicList[currentPlayingIndex] != null)
+        {
+            // Calculate distance between the player and the enemy
+            float distance = Vector3.Distance(player.position, currentEnemy.position);
+
+            // Modulate volume based on distance
+            float currentVolume = Mathf.Lerp(maxVolume, minVolume, distance / maxDistance) * fogVolumeFactor;
+
+            // Clamp the volume to the range [minVolume, maxVolume]
+            musicList[currentPlayingIndex].volume = Mathf.Clamp(currentVolume, minVolume, maxVolume);
+        }
     }
     public void PlayBumpIntoWall() {
         bump.Play();
@@ -62,15 +82,12 @@ public class AudioController : MonoBehaviour
             } else {
                 currentPlayingIndex = 1;
             }
-            if (GlobalAmbientControl.ambientControl.isFogOn) {
-                currentVolume = defaultVolume / 2;
-            } else {
-                currentVolume = defaultVolume;
-
-            }
+            // if (GlobalAmbientControl.ambientControl.isFogOn) {
+            //     currentVolume = currentVolume / 2;
+            // }
             if (isBackgroundPlaying) {
                 musicList[currentPlayingIndex].Play();
-                musicList[currentPlayingIndex].volume = currentVolume;
+                // musicList[currentPlayingIndex].volume = currentVolume;
                 
             } else {
                 musicList[currentPlayingIndex].Stop();
@@ -82,18 +99,20 @@ public class AudioController : MonoBehaviour
         musicList[currentPlayingIndex].Stop();
         currentPlayingIndex = (currentPlayingIndex + 1) % 2;
         musicList[currentPlayingIndex].Play();
-        musicList[currentPlayingIndex].volume = currentVolume;
+        
     }
 
     public void ToggleFogVolume() {
         if (GlobalAmbientControl.ambientControl.isFogOn) {
-            currentVolume = defaultVolume / 2;
+            fogVolumeFactor = 0.5f;
             
         } else {
-            currentVolume = defaultVolume;
+            fogVolumeFactor = 1f;
         }
-        musicList[currentPlayingIndex].volume = currentVolume;
+        // musicList[currentPlayingIndex].volume = currentVolume * fogVolumeFactor;
     }
+
+
 
 
     public void StopMusic()

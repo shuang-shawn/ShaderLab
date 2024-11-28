@@ -1339,7 +1339,7 @@ MonoBehaviour:
   ballPrefab: {fileID: 1455323376469895715, guid: 5de308ed37150944d86c14a02323385e, type: 3}
   throwForce: 4
   stepInterval: 0.5
-  bumpInterval: 0.5
+  bumpInterval: 1
 --- !u!143 &863426601
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1403,6 +1403,7 @@ MonoBehaviour:
   player: {fileID: 863426594}
   exit: {fileID: 754779802}
   monsterPrefab: {fileID: 7369416031831954048, guid: e0f3b8831e800e6438898f009c028dde, type: 3}
+  currentMonster: {fileID: 0}
 --- !u!4 &884938586
 Transform:
   m_ObjectHideFlags: 0
@@ -2659,8 +2660,13 @@ MonoBehaviour:
   - {fileID: 1093191238}
   isBackgroundPlaying: 0
   defaultVolume: 0.2
-  maxVolum: 0.6
+  fogVolumeFactor: 1
+  maxVolume: 0.6
   currentVolume: 0.2
+  minVolume: 0.1
+  maxDistance: 5
+  player: {fileID: 863426598}
+  currentEnemy: {fileID: 0}
 --- !u!4 &1660613113
 Transform:
   m_ObjectHideFlags: 0

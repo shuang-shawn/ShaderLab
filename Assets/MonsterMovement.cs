@@ -33,7 +33,13 @@ public class MonsterAI : MonoBehaviour
     private void Update()
     {
         MoveMonster();
+        if (AudioController.aCtrl.isBackgroundPlaying) {
+            AudioController.aCtrl.currentEnemy = transform;
+        }
     }
+
+
+   
 
     private void MoveMonster()
     {

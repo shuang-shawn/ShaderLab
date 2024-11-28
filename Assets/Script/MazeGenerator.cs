@@ -21,7 +21,7 @@ public class MazeGenerator : MonoBehaviour
     private List<Vector2Int[]> directionSequence; // Stores pre-generated direction sequences
     private List<GameObject> walls = new List<GameObject>();
     private bool isPassable = false;
-    private GameObject monster;
+    public GameObject currentMonster;
     private void Awake() {
         if (mazeGenerator == null)
         {
@@ -211,7 +211,7 @@ public class MazeGenerator : MonoBehaviour
 
         // Position the exit at the opposite corner of the maze
         exit.transform.position = new Vector3(width - 1, 0, height - 1);
-        monster = Instantiate(monsterPrefab,new Vector3(0, 0, height - 1), Quaternion.identity);
+        currentMonster = Instantiate(monsterPrefab,new Vector3(0, 0, height - 1), Quaternion.identity);
     }
     
     public void RestartGame() {
@@ -219,7 +219,7 @@ public class MazeGenerator : MonoBehaviour
         int randomX = Random.Range(0, width);
         int randomZ = Random.Range(0, height);
         Vector3 respawnPosition = new Vector3(randomX, 0, randomZ);
-        monster.transform.position = respawnPosition;
+        currentMonster.transform.position = respawnPosition;
         player.transform.position = new Vector3(0, 0, 0);
     }
 
@@ -237,7 +237,7 @@ public class MazeGenerator : MonoBehaviour
         int randomX = Random.Range(0, width);
         int randomZ = Random.Range(0, height);
         Vector3 respawnPosition = new Vector3(randomX, 0, randomZ);
-        monster = Instantiate(monsterPrefab, respawnPosition, Quaternion.identity);
+        currentMonster = Instantiate(monsterPrefab, respawnPosition, Quaternion.identity);
         if (AudioController.aCtrl != null) {
             AudioController.aCtrl.PlayEnemyRespawn();
         }
