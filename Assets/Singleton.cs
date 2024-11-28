@@ -21,6 +21,8 @@ public class Singleton : MonoBehaviour
         } else {
             endgame.text = left + " : " + right + "\nGame End";
         }
+        Cursor.visible = true; // Makes the cursor visible
+        Cursor.lockState = CursorLockMode.None; 
     }
 
     // Update is called once per frame
