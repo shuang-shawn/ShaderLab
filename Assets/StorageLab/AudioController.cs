@@ -14,10 +14,13 @@ public class AudioController : MonoBehaviour
     {
         if (aCtrl == null)
         {
-            levelMusic = bgMusic1.GetComponent<AudioSource>();
-            levelMusic.loop = true;
             aCtrl = this;
+        } else if (aCtrl != this)
+        {
+            Destroy(gameObject); // Ensure only one instance exists
         }
+
+        DontDestroyOnLoad(gameObject); // Optional: persists across scenes
     }
     public void PlaySFX()
     {

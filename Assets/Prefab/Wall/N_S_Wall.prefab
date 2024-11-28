@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1685768035019248215}
   m_Layer: 0
   m_Name: Front (1)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91,7 +91,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 641688847610934480}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 7becff465d37ea947a9ac638418e9e2b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 7696312925951066158}
   m_Layer: 0
   m_Name: Back (1)
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -197,7 +197,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3438069979162319919}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 7becff465d37ea947a9ac638418e9e2b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 8688063764445094632}
   m_Layer: 0
   m_Name: N_S_Wall
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

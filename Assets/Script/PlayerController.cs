@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour
     private void ThrowBall(InputAction.CallbackContext context)
     {
         // Instantiate the ball
-        GameObject ball = Instantiate(ballPrefab, transform.position + new Vector3(0,0.6f,0), transform.rotation);
+        GameObject ball = Instantiate(ballPrefab, transform.position + new Vector3(0,0.5f,0), transform.rotation);
 
         // Get Rigidbody and apply force in the forward direction
         Rigidbody rb = ball.GetComponent<Rigidbody>();
