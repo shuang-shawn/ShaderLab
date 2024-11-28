@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 
 
@@ -33,6 +35,20 @@ public class MazeGenerator : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject); // Optional: persists across scenes
+        SceneManager.sceneLoaded += OnSceneLoaded; // Register event
+    }
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded; // Unregister event
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Check if the maze scene is loaded
+        if (scene.name == "Maze") // Replace "MazeScene" with your actual maze scene name
+        {
+            SetUpPlayerEnemy();
+        }
     }
 
     private void Start()
@@ -217,6 +233,12 @@ public class MazeGenerator : MonoBehaviour
                 child.gameObject.layer = layer;
             }
         }
+    }
+    private void SetUpPlayerEnemy() {
+        Debug.Log("setting up");
+        player = GameObject.Find("Player");
+        exit = GameObject.Find("End");
+        PositionPlayerAndExit();
     }
 
     void PositionPlayerAndExit()
