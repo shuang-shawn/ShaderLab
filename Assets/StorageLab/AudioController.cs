@@ -43,7 +43,10 @@ public class AudioController : MonoBehaviour
         
     }
     private void FixedUpdate() {
-        currentEnemy = MazeGenerator.mazeGenerator.currentMonster.transform;
+        if (MazeGenerator.mazeGenerator.currentMonster != null) {
+
+            currentEnemy = MazeGenerator.mazeGenerator.currentMonster.transform;
+        }
         if (player != null && currentEnemy != null && musicList[currentPlayingIndex] != null)
         {
             // Calculate distance between the player and the enemy

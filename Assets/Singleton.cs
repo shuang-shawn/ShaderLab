@@ -43,6 +43,7 @@ public class Singleton : MonoBehaviour
     }
 
     public void QuitGame() {
-        Application.Quit();
+        SceneManager.LoadScene("Maze");
+
     }
 }
