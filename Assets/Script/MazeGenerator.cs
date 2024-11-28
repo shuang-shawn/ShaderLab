@@ -213,6 +213,15 @@ public class MazeGenerator : MonoBehaviour
         exit.transform.position = new Vector3(width - 1, 0, height - 1);
         monster = Instantiate(monsterPrefab,new Vector3(0, 0, height - 1), Quaternion.identity);
     }
+    
+    public void RestartGame() {
+        PlayerPrefs.SetInt("Score", 0);
+        int randomX = Random.Range(0, width);
+        int randomZ = Random.Range(0, height);
+        Vector3 respawnPosition = new Vector3(randomX, 0, randomZ);
+        monster.transform.position = respawnPosition;
+        player.transform.position = new Vector3(0, 0, 0);
+    }
 
     public void RespawnEnemy() {
         StartCoroutine(DelayedRespawn());

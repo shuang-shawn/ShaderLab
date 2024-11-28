@@ -130,4 +130,12 @@ public class MonsterAI : MonoBehaviour
             hitTimes = 0;
         }
     }
+
+    private void OnCollisionEnter(Collision other) {
+        if (other.gameObject.CompareTag("Player")) {
+            if (MazeGenerator.mazeGenerator != null) {
+                MazeGenerator.mazeGenerator.RestartGame();
+            }
+        }
+    }
 }
