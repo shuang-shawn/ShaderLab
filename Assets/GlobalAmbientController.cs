@@ -5,18 +5,19 @@ public class GlobalAmbientControl : MonoBehaviour
     public Material[] objectMaterials;  // List of materials to update
     public UnityEngine.KeyCode fogToggleKey = KeyCode.F;
     public UnityEngine.KeyCode dayNightToggleKey = KeyCode.T;
+    public UnityEngine.KeyCode flashlightToggleKey = KeyCode.Y;
+    public Transform playerTransform;
+
 
 
     private bool isDay = true;
-    private bool isFogOn = false;          // Start with day mode
+    private bool isFogOn = false;          
+    private bool isFlashlightOn = false;
 
     void Start()
     {
         // Initialize the materials array if needed
-        if (objectMaterials.Length == 0)
-        {
-            objectMaterials = FindObjectMaterials();
-        }
+        
     }
 
     void Update()
@@ -39,6 +40,29 @@ public class GlobalAmbientControl : MonoBehaviour
             SetFogEffect(isFogOn);
         }
 
+        if (Input.GetKeyDown(flashlightToggleKey))
+        {
+            isFlashlightOn = !isFlashlightOn;
+            SetFlashlightState(isFlashlightOn);
+        }
+        if (isFlashlightOn) {
+            foreach (var mat in objectMaterials)
+            {
+                mat.SetVector("_PlayerPosition", playerTransform.position);
+            }
+        }
+
+
+    }
+
+        void SetFlashlightState(bool isOn)
+    {
+
+        float flashlightValue = isOn ? 1.0f : 0.0f;
+        foreach (var mat in objectMaterials)
+        {
+            mat.SetFloat("_UseFlashlight", flashlightValue);
+        }
     }
 
     void SetFogEffect(bool enableFog)
@@ -59,16 +83,5 @@ public class GlobalAmbientControl : MonoBehaviour
         }
     }
 
-    // Find all material instances in the scene that use the custom shader
-    Material[] FindObjectMaterials()
-    {
-        Renderer[] renderers = FindObjectsOfType<Renderer>();
-        Material[] materials = new Material[renderers.Length];
-        
-        for (int i = 0; i < renderers.Length; i++)
-        {
-            materials[i] = renderers[i].sharedMaterial;
-        }
-        return materials;
-    }
+
 }
