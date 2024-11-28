@@ -6,6 +6,6 @@ public class Score : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = "Score: " + PlayerPrefs.GetInt("Score");
+        text.text = "Score: " + PlayerPrefs.GetInt("MazeScore");
     }
 }

@@ -240,6 +240,19 @@ public class MazeGenerator : MonoBehaviour
         exit = GameObject.Find("End");
         PositionPlayerAndExit();
     }
+    public void LoadMazeData(int score, Vector3 playerPos, Vector3 enemyPos) {
+        if (player == null || currentMonster == null)
+        {
+            Debug.LogError("Player or currentMonster reference is null!");
+        }
+        // player.GetComponent<Rigidbody>().MovePosition(playerPos);
+        // currentMonster.GetComponent<Rigidbody>().MovePosition(enemyPos);
+
+
+        player.GetComponent<PlayerController>().SetPlayerPosition(playerPos);
+        currentMonster.transform.position = enemyPos;
+        PlayerPrefs.SetInt("MazeScore", score);
+    }
 
     void PositionPlayerAndExit()
     {
@@ -248,7 +261,10 @@ public class MazeGenerator : MonoBehaviour
 
         // Position the exit at the opposite corner of the maze
         exit.transform.position = new Vector3(width - 1, 0, height - 1);
-        currentMonster = Instantiate(monsterPrefab,new Vector3(0, 0, height - 1), Quaternion.identity);
+        if (currentMonster == null) {
+
+            currentMonster = Instantiate(monsterPrefab,new Vector3( width / 2, 0, (height - 1) / 2), Quaternion.identity);
+        }
     }
     
     public void RestartGame() {

@@ -68,13 +68,13 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Application.isFocused) {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        } else {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
+        // if (Application.isFocused) {
+        //     Cursor.lockState = CursorLockMode.Locked;
+        //     Cursor.visible = false;
+        // } else {
+        //     Cursor.lockState = CursorLockMode.None;
+        //     Cursor.visible = true;
+        // }
         
             HandleMovement();
             // HandleLook();
@@ -186,5 +186,17 @@ public class PlayerController : MonoBehaviour
                 bumpTimer = bumpInterval; // Reset the timer
             }
         }
+    }
+
+    public void SetPlayerPosition(Vector3 playerPos)
+    {
+        // Option 1: Temporarily disable the CharacterController and set position
+        characterController.enabled = false; // Disable CharacterController temporarily
+        transform.position = playerPos;      // Set the position directly
+        characterController.enabled = true;  // Re-enable CharacterController
+
+        // Option 2: Use CharacterController's Move method
+        // Vector3 moveDirection = playerPos - transform.position;
+        // characterController.Move(moveDirection);
     }
 }

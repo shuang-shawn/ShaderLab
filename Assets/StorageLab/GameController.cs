@@ -3,6 +3,7 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 public class GameController : MonoBehaviour
 {
     public List<int> highScores = new List<int>(); //use persistentDataPath to save high score in custom GameData object
@@ -30,12 +31,12 @@ public class GameController : MonoBehaviour
     {
         public List<int> savedHighScores;
     };
-
+    [Serializable]
     class MazeData
     {
         public int score;
-        public Vector3 playerPos;
-        public Vector3 enemyPos;
+        public List<float> playerPos;
+        public List<float> enemyPos;
     }
 
     //use persistentDataPath to load high score
@@ -61,10 +62,18 @@ public class GameController : MonoBehaviour
             
             MazeData data = (MazeData)bf.Deserialize(fs); //deserialize data at filepath using Binary formatter, cast into GameData object
             fs.Close();
+ 
+
             gCtrl.score = data.score;
-            gCtrl.playerPos = data.playerPos;
-            gCtrl.enemyPos = data.enemyPos;
+            gCtrl.playerPos = new Vector3(data.playerPos[0], data.playerPos[1], data.playerPos[2]);
+            gCtrl.enemyPos = new Vector3(data.enemyPos[0], data.enemyPos[1], data.enemyPos[2]);
         }
+
+        if (MazeGenerator.mazeGenerator != null) {
+            Debug.Log("triggering load maze data function");
+            MazeGenerator.mazeGenerator.LoadMazeData(gCtrl.score, gCtrl.playerPos, gCtrl.enemyPos);
+        }
+        
     }
 
     //use persistentDataPath to save high score
@@ -105,15 +114,22 @@ public class GameController : MonoBehaviour
         
     }
 
-    public void SaveMaze(int s, Vector3 player, Vector3 enemy)
+    public void SaveMaze()
     {
+        if (MazeGenerator.mazeGenerator != null) {
+            gCtrl.playerPos = MazeGenerator.mazeGenerator.player.transform.position;
+            gCtrl.enemyPos = MazeGenerator.mazeGenerator.currentMonster.transform.position;
+            Debug.Log("player pos: " + gCtrl.playerPos);
+            Debug.Log("enemy pos: " + gCtrl.enemyPos);
+
+        }
+
 
        
             // Add the new score
-            gCtrl.score = s;
+            gCtrl.score = PlayerPrefs.GetInt("MazeScore");
             
-            gCtrl.playerPos = player;
-            gCtrl.enemyPos = enemy;
+            
 
       
             BinaryFormatter bf = new BinaryFormatter(); //class to help serialize and deserialize data
@@ -121,8 +137,21 @@ public class GameController : MonoBehaviour
                                     
             MazeData data = new MazeData(); //create new GameData object set high score to be saved
             data.score = gCtrl.score;
-            data.enemyPos = gCtrl.enemyPos;
-            data.playerPos = gCtrl.playerPos;
+            data.playerPos = new List<float>
+            {
+                gCtrl.playerPos.x,
+                gCtrl.playerPos.y,
+                gCtrl.playerPos.z
+            };
+      
+            data.enemyPos = new List<float>
+            {
+                gCtrl.enemyPos.x,
+                gCtrl.enemyPos.y,
+                gCtrl.enemyPos.z
+            };
+
+
             bf.Serialize(fs, data); //use binary formatter to serialize data at filepath
             fs.Close();
     
