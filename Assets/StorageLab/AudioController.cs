@@ -18,6 +18,8 @@ public class AudioController : MonoBehaviour
     public List<AudioSource> musicList;
     private int currentTrackIndex = 0;
     private AudioSource currentSong;
+    public bool isBackgroundPlaying = false;
+    private int currentPlayingIndex = 0;
     public void Awake()
     {
         if (aCtrl == null)
@@ -47,6 +49,31 @@ public class AudioController : MonoBehaviour
     public void PlayEnemyRespawn() {
         enemyRespawn.Play();
     }
+
+    public void ToggleBackgroundMusic() {
+        isBackgroundPlaying = !isBackgroundPlaying;
+        if (GlobalAmbientControl.ambientControl != null) {
+            if (GlobalAmbientControl.ambientControl.isDay) {
+                currentPlayingIndex = 0;
+            } else {
+                currentPlayingIndex = 1;
+            }
+            if (isBackgroundPlaying) {
+                musicList[currentPlayingIndex].Play();
+            } else {
+                musicList[currentPlayingIndex].Stop();
+            }
+        }
+    }
+
+    public void SwitchBackgroundMusic() {
+        musicList[currentPlayingIndex].Stop();
+        currentPlayingIndex = (currentPlayingIndex + 1) % 2;
+        musicList[currentPlayingIndex].Play();
+
+    }
+
+
     public void StopMusic()
     {
         musicList[currentTrackIndex].Stop();

@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
         playerInputActions.Player.PassThrough.performed += OnPassThrough;
         playerInputActions.Player.ResetGame.performed += OnResetGame;
         playerInputActions.Player.Throw.performed += ThrowBall;
+        playerInputActions.Player.Music.performed += OnMusic;
        
         stepTimer = 0f;
         bumpTimer = 0f;
@@ -96,6 +97,12 @@ public class PlayerController : MonoBehaviour
         {
             // Reset timer if the player stops moving
             stepTimer = 0f;
+        }
+    }
+
+    private void OnMusic(InputAction.CallbackContext context) {
+        if (AudioController.aCtrl != null) {
+            AudioController.aCtrl.ToggleBackgroundMusic();
         }
     }
 

@@ -71,6 +71,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Music"",
+                    ""type"": ""Button"",
+                    ""id"": ""b927c465-408b-4c04-9a9f-ae374fd1519d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -260,6 +269,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Throw"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""22c24336-54b4-49a4-ae51-694831d6c8e1"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Music"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -273,6 +293,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_PassThrough = m_Player.FindAction("PassThrough", throwIfNotFound: true);
         m_Player_ResetGame = m_Player.FindAction("ResetGame", throwIfNotFound: true);
         m_Player_Throw = m_Player.FindAction("Throw", throwIfNotFound: true);
+        m_Player_Music = m_Player.FindAction("Music", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -339,6 +360,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PassThrough;
     private readonly InputAction m_Player_ResetGame;
     private readonly InputAction m_Player_Throw;
+    private readonly InputAction m_Player_Music;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -348,6 +370,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @PassThrough => m_Wrapper.m_Player_PassThrough;
         public InputAction @ResetGame => m_Wrapper.m_Player_ResetGame;
         public InputAction @Throw => m_Wrapper.m_Player_Throw;
+        public InputAction @Music => m_Wrapper.m_Player_Music;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -372,6 +395,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Throw.started += instance.OnThrow;
             @Throw.performed += instance.OnThrow;
             @Throw.canceled += instance.OnThrow;
+            @Music.started += instance.OnMusic;
+            @Music.performed += instance.OnMusic;
+            @Music.canceled += instance.OnMusic;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -391,6 +417,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Throw.started -= instance.OnThrow;
             @Throw.performed -= instance.OnThrow;
             @Throw.canceled -= instance.OnThrow;
+            @Music.started -= instance.OnMusic;
+            @Music.performed -= instance.OnMusic;
+            @Music.canceled -= instance.OnMusic;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -415,5 +444,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnPassThrough(InputAction.CallbackContext context);
         void OnResetGame(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
+        void OnMusic(InputAction.CallbackContext context);
     }
 }
