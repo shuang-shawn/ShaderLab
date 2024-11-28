@@ -6,6 +6,10 @@ public class AudioController : MonoBehaviour
     public static AudioController aCtrl;
     public GameObject bgMusic1;
     public AudioSource sfxSrc;
+    public AudioSource enemyDie;
+
+    public AudioSource enemyRespawn;
+
     private AudioSource levelMusic;
     public List<AudioSource> musicList;
     private int currentTrackIndex = 0;
@@ -26,6 +30,12 @@ public class AudioController : MonoBehaviour
     {
         //aCtrl.sfxSrc.Play() //this does the same thing
         sfxSrc.Play();
+    }
+    public void PlayEnemyDie() {
+        enemyDie.Play();
+    }
+    public void PlayEnemyRespawn() {
+        enemyRespawn.Play();
     }
     public void StopMusic()
     {

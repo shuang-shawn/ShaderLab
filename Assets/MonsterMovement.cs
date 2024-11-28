@@ -122,8 +122,10 @@ public class MonsterAI : MonoBehaviour
 
     public void GetHit() {
         hitTimes += 1;
-        Debug.Log(hitTimes);
         if (hitTimes > 2) {
+            if (AudioController.aCtrl != null) {
+                AudioController.aCtrl.PlayEnemyDie();
+            }
             Respawn();
             hitTimes = 0;
         }

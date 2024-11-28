@@ -229,6 +229,9 @@ public class MazeGenerator : MonoBehaviour
         int randomZ = Random.Range(0, height);
         Vector3 respawnPosition = new Vector3(randomX, 0, randomZ);
         monster = Instantiate(monsterPrefab, respawnPosition, Quaternion.identity);
+        if (AudioController.aCtrl != null) {
+            AudioController.aCtrl.PlayEnemyRespawn();
+        }
     }
 
     bool IsWithinBounds(int x, int y)
