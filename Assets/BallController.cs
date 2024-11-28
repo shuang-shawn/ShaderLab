@@ -32,6 +32,10 @@ public class BallController : MonoBehaviour
             // rb.AddForce(normal * 0.1f, ForceMode.Impulse);
 
             // Debug.Log("Bounced off: " + other.gameObject.name);
+
+            if (other.gameObject.CompareTag("enemy")) {
+                other.gameObject.GetComponent<MonsterAI>().GetHit();
+            }
             if (AudioController.aCtrl != null) {
                 AudioController.aCtrl.PlaySFX();
             }

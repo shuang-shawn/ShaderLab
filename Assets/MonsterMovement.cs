@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+
 
 public class MonsterAI : MonoBehaviour
 {
@@ -6,12 +8,14 @@ public class MonsterAI : MonoBehaviour
     public float detectionDistance = 0.5f;     // Distance to detect walls in front and sides
     public float turnCooldown = 1f;            // Cooldown time between turns
     public float turnDelay = 0.5f;             // Delay time before turning after detecting a turn
+    private MazeGenerator maze;
 
     private Vector3 moveDirection;
     private float turnTimer;                    // Timer to manage turning cooldown
     private float delayTimer;                   // Timer to manage the delay before turning
     private bool isTurning;                     // Indicates if the monster is currently turning
-    private Vector3 newDirection;               // The new direction to turn to
+    private Vector3 newDirection;       
+    public int hitTimes = 0;        // The new direction to turn to
     // private bool turnRight = true;
 
     private void Start()
@@ -20,6 +24,10 @@ public class MonsterAI : MonoBehaviour
         turnTimer = 0f;                    // Initialize turn timer
         delayTimer = 0f;                   // Initialize delay timer
         isTurning = false;                  // Initially not turning
+        if (MazeGenerator.mazeGenerator != null) {
+
+            maze = MazeGenerator.mazeGenerator;
+        }
     }
 
     private void Update()
@@ -103,5 +111,21 @@ public class MonsterAI : MonoBehaviour
 
         // Reset the turn cooldown timer
         turnTimer = turnCooldown;
+    }
+    private void Respawn() {
+        maze.RespawnEnemy();
+        Destroy(gameObject);
+
+    }
+
+
+
+    public void GetHit() {
+        hitTimes += 1;
+        Debug.Log(hitTimes);
+        if (hitTimes > 2) {
+            Respawn();
+            hitTimes = 0;
+        }
     }
 }

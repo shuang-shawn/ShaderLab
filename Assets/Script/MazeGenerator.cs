@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class MazeGenerator : MonoBehaviour
 {
+    public static MazeGenerator mazeGenerator;
     public int width = 5; // Maze width
     public int height = 5; // Maze height
     // public GameObject wallPrefab; // Prefab for the wall
@@ -14,12 +15,24 @@ public class MazeGenerator : MonoBehaviour
     public GameObject floorPrefab; // Prefab for the floor
     public GameObject player; // Reference to the player object
     public GameObject exit; // Reference to the exit object
-    public GameObject monster;
+    public GameObject monsterPrefab;
 
     private Cell[,] maze; // 2D array representing the maze
     private List<Vector2Int[]> directionSequence; // Stores pre-generated direction sequences
     private List<GameObject> walls = new List<GameObject>();
     private bool isPassable = false;
+    private GameObject monster;
+    private void Awake() {
+        if (mazeGenerator == null)
+        {
+            mazeGenerator = this;
+        } else if (mazeGenerator != this)
+        {
+            Destroy(gameObject); // Ensure only one instance exists
+        }
+
+        DontDestroyOnLoad(gameObject); // Optional: persists across scenes
+    }
 
     private void Start()
     {
@@ -198,7 +211,24 @@ public class MazeGenerator : MonoBehaviour
 
         // Position the exit at the opposite corner of the maze
         exit.transform.position = new Vector3(width - 1, 0, height - 1);
-        monster.transform.position = new Vector3(0, 0, height - 1);
+        monster = Instantiate(monsterPrefab,new Vector3(0, 0, height - 1), Quaternion.identity);
+    }
+
+    public void RespawnEnemy() {
+        StartCoroutine(DelayedRespawn());
+        
+    }
+
+    IEnumerator DelayedRespawn()
+    {
+        // Wait for 5 seconds
+        yield return new WaitForSeconds(5f);
+
+        // Execute the function after the delay
+        int randomX = Random.Range(0, width);
+        int randomZ = Random.Range(0, height);
+        Vector3 respawnPosition = new Vector3(randomX, 0, randomZ);
+        monster = Instantiate(monsterPrefab, respawnPosition, Quaternion.identity);
     }
 
     bool IsWithinBounds(int x, int y)
@@ -227,9 +257,9 @@ public class MazeGenerator : MonoBehaviour
         playerController.enabled = true;
 
 
-        monster.SetActive(false);
-        monster.transform.position = new Vector3(0, 0, height - 1);
-        monster.SetActive(true);
+        monsterPrefab.SetActive(false);
+        monsterPrefab.transform.position = new Vector3(0, 0, height - 1);
+        monsterPrefab.SetActive(true);
 
     }
 }
