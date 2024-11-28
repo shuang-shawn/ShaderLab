@@ -16,6 +16,7 @@ public class MazeGenerator : MonoBehaviour
     public GameObject player; // Reference to the player object
     public GameObject exit; // Reference to the exit object
     public GameObject monsterPrefab;
+    public GameObject doorPrefab;
 
     private Cell[,] maze; // 2D array representing the maze
     private List<Vector2Int[]> directionSequence; // Stores pre-generated direction sequences
@@ -162,6 +163,20 @@ public class MazeGenerator : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 Vector3 cellPosition = new Vector3(x, 0, y);
+
+                if (x == width - 1 && y == height - 1)
+                {
+                    // Replace the north or east wall with the door
+                    if (maze[x, y].northWall)
+                        walls.Add(Instantiate(horizontalWallPrefab, cellPosition + new Vector3(0, 0, 0.5f), Quaternion.identity, transform));
+                    if (maze[x, y].southWall)
+                        walls.Add(Instantiate(horizontalWallPrefab, cellPosition + new Vector3(0, 0, -0.5f), Quaternion.identity, transform));
+                    if (maze[x, y].eastWall)
+                        walls.Add(Instantiate(doorPrefab, cellPosition + new Vector3(0.5f, 0, 0), Quaternion.identity, transform));
+                    if (maze[x, y].westWall)
+                        walls.Add(Instantiate(verticalWallPrefab, cellPosition + new Vector3(-0.5f, 0, 0), Quaternion.identity, transform));
+                    continue; // Skip placing walls for this cell
+                }
 
                 if (maze[x, y].northWall)
                     walls.Add(Instantiate(horizontalWallPrefab, cellPosition + new Vector3(0, 0, 0.5f), Quaternion.identity, transform));

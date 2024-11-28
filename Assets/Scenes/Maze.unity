@@ -455,7 +455,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 223486452}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.32326597, y: 0, z: 0, w: 0.9463082}
+  m_LocalRotation: {x: 0.3232659, y: -0.000000018256378, z: 0.000000006236517, w: 0.9463082}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1403,6 +1403,7 @@ MonoBehaviour:
   player: {fileID: 863426594}
   exit: {fileID: 754779802}
   monsterPrefab: {fileID: 7369416031831954048, guid: e0f3b8831e800e6438898f009c028dde, type: 3}
+  doorPrefab: {fileID: 8938076174823132595, guid: dd82ab0910b404b7e8263dc39b8bc81e, type: 3}
   currentMonster: {fileID: 0}
 --- !u!4 &884938586
 Transform:
@@ -2280,7 +2281,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1333230693}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.34042534, y: 0, z: 0, w: 0.9402716}
+  m_LocalRotation: {x: 0.34042522, y: 0.000000014011141, z: -0.0000000050727316, w: 0.9402716}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3028,7 +3029,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1881353888}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3060453, y: 0, z: 0, w: 0.95201695}
+  m_LocalRotation: {x: 0.30604526, y: -0.000000035070112, z: 0.000000011274001, w: 0.952017}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
