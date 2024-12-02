@@ -261,7 +261,7 @@ public class MazeGenerator : MonoBehaviour
 
         // Position the exit at the opposite corner of the maze
         exit.transform.position = new Vector3(width - 1, 0, height - 1);
-        if (currentMonster == null) {
+        if (currentMonster == null && GameObject.Find("Monster") == null) {
 
             currentMonster = Instantiate(monsterPrefab,new Vector3( width / 2, 0, (height - 1) / 2), Quaternion.identity);
         }
@@ -325,7 +325,19 @@ public class MazeGenerator : MonoBehaviour
         monsterPrefab.SetActive(false);
         monsterPrefab.transform.position = new Vector3(0, 0, height - 1);
         monsterPrefab.SetActive(true);
+    }
 
+    public void TeleportToEnd() {
+        CharacterController playerController = player.GetComponent<CharacterController>();
+        playerController.enabled = false;
+        playerController.transform.position = new Vector3(width - 1, 0, height - 1);
+        playerController.enabled = true;
+    }
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.P)) {
+            TeleportToEnd();
+        }
+        
     }
 }
 

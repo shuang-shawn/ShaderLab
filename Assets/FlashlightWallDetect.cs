@@ -22,7 +22,7 @@ public class FlashlightRaycast : MonoBehaviour
         {
             // Debug.Log(hit.collider.gameObject.name);
             float hitDistance = hit.distance;
-            Debug.Log(hitDistance);
+            // Debug.Log(hitDistance);
             AdjustBeamLength(hitDistance);
         }
         else

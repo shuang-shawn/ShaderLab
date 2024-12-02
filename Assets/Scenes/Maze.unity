@@ -3080,9 +3080,9 @@ MonoBehaviour:
   - {fileID: 769883896}
   - {fileID: 1093191238}
   isBackgroundPlaying: 0
-  defaultVolume: 0.2
+  defaultVolume: 0.3
   fogVolumeFactor: 1
-  maxVolume: 0.6
+  maxVolume: 0.8
   currentVolume: 0.2
   minVolume: 0.1
   maxDistance: 5

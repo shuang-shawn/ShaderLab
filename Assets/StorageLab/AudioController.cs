@@ -25,7 +25,7 @@ public class AudioController : MonoBehaviour
     public float maxVolume = 0.7f;
     public float currentVolume = 0.2f;
     public float minVolume = 0.1f;
-    public float maxDistance = 5f;
+    public float maxDistance = 2f;
     public Transform player;
     public Transform currentEnemy;
 
@@ -52,11 +52,25 @@ public class AudioController : MonoBehaviour
             // Calculate distance between the player and the enemy
             float distance = Vector3.Distance(player.position, currentEnemy.position);
 
-            // Modulate volume based on distance
-            float currentVolume = Mathf.Lerp(maxVolume, minVolume, distance / maxDistance) * fogVolumeFactor;
+            if (distance <= maxDistance) {
+                if (GlobalAmbientControl.ambientControl.isFogOn) {
+                    musicList[currentPlayingIndex].volume = maxVolume / 2;
+                } else {
+                    musicList[currentPlayingIndex].volume = maxVolume;
+                }
+            } else {
+                if (GlobalAmbientControl.ambientControl.isFogOn) {
+                    musicList[currentPlayingIndex].volume = defaultVolume / 2;
+                } else {
+                    musicList[currentPlayingIndex].volume = defaultVolume;
+                }
+            }
 
-            // Clamp the volume to the range [minVolume, maxVolume]
-            musicList[currentPlayingIndex].volume = Mathf.Clamp(currentVolume, minVolume, maxVolume);
+        //     // Modulate volume based on distance
+        //     float currentVolume = Mathf.Lerp(maxVolume, minVolume, distance / maxDistance) * fogVolumeFactor;
+
+        //     // Clamp the volume to the range [minVolume, maxVolume]
+        //     musicList[currentPlayingIndex].volume = Mathf.Clamp(currentVolume, minVolume, maxVolume);
         }
     }
     public void PlayBumpIntoWall() {
@@ -112,6 +126,7 @@ public class AudioController : MonoBehaviour
         } else {
             fogVolumeFactor = 1f;
         }
+
         // musicList[currentPlayingIndex].volume = currentVolume * fogVolumeFactor;
     }
 
