@@ -7,13 +7,17 @@ public class GlobalAmbientControl : MonoBehaviour
     public UnityEngine.KeyCode fogToggleKey = KeyCode.F;
     public UnityEngine.KeyCode dayNightToggleKey = KeyCode.T;
     public UnityEngine.KeyCode flashlightToggleKey = KeyCode.Y;
+    public UnityEngine.KeyCode newFlashlightToggleKey = KeyCode.U;
+
     public Transform playerTransform;
+    public Material flashlightMaterial;
 
 
 
     public bool isDay = true;
     public bool isFogOn = false;          
     private bool isFlashlightOn = false;
+    private bool isNewFlashlighOn = false;
 
     public void Awake()
     {
@@ -74,8 +78,18 @@ public class GlobalAmbientControl : MonoBehaviour
                 mat.SetVector("_PlayerPosition", playerTransform.position);
             }
         }
+        
+        if (Input.GetKeyDown(newFlashlightToggleKey))
+        {
+            isNewFlashlighOn = !isNewFlashlighOn;
+            SetNewFlashlightState(isNewFlashlighOn);
+        }
 
+    }
 
+    void SetNewFlashlightState(bool isOn) {
+        float flashlightValue = isOn ? 0.5f : 0.0f;
+        flashlightMaterial.SetFloat("_BeamOpacity", flashlightValue);
     }
 
         void SetFlashlightState(bool isOn)
