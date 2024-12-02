@@ -53,6 +53,7 @@ public class MazeGenerator : MonoBehaviour
 
     private void Start()
     {
+        PlayerPrefs.SetInt("MazeScore", 0);
         GenerateDirectionSequence();
         InitializeMaze();
         GenerateMazeLayout();
