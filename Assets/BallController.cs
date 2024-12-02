@@ -35,8 +35,8 @@ public class BallController : MonoBehaviour
 
             if (other.gameObject.CompareTag("enemy")) {
                 other.gameObject.GetComponent<MonsterAI>().GetHit();
-                int currentScore = PlayerPrefs.GetInt("Score");
-                PlayerPrefs.SetInt("Score", currentScore + 1);
+                int currentScore = PlayerPrefs.GetInt("MazeScore");
+                PlayerPrefs.SetInt("MazeScore", currentScore + 1);
                 Destroy(gameObject);
             }
             if (AudioController.aCtrl != null) {
